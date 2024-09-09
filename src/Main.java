@@ -13,5 +13,10 @@ public class Main {
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        TicTacToe ticTacToe = new TicTacToe(boardHeight, boardWidth);
+        frame.add(ticTacToe);
+        frame.pack();
+        ticTacToe.requestFocus();
     }
 }
