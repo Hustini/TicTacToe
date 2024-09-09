@@ -5,10 +5,12 @@ public class TicTacToe extends JPanel {
     private class Tile {
         int x;
         int y;
+        String symbol;
 
-        Tile(int x, int y) {
+        Tile(int x, int y, String symbol) {
             this.x = x;
             this.y = y;
+            this.symbol = symbol;
         }
     }
 
@@ -16,8 +18,8 @@ public class TicTacToe extends JPanel {
     int boardHeight;
     int tileSize = 200;
 
-    String[][] board = new String[3][3];
-    Tile tile = new Tile(0, 0);
+    Tile[][] board = new Tile[3][3];
+    Tile tile = new Tile(0, 0, "");
 
     TicTacToe(int boardHeight, int boardWidth) {
         this.boardHeight = boardHeight;
@@ -25,6 +27,20 @@ public class TicTacToe extends JPanel {
         setPreferredSize(new Dimension(this.boardWidth, this.boardHeight));
         setBackground(Color.BLACK);
         setFocusable(true);
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                Tile newTile = new Tile(0, 0, "x");
+                board[i][j] = newTile;
+            }
+        }
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println();
+        }
     }
 
     public void paintComponent(Graphics g) {
