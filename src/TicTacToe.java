@@ -12,6 +12,11 @@ public class TicTacToe extends JPanel {
             this.y = y;
             this.symbol = symbol;
         }
+
+        public String getSymbol()
+        {
+            return symbol;
+        }
     }
 
     int boardWidth;
@@ -30,14 +35,14 @@ public class TicTacToe extends JPanel {
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                Tile newTile = new Tile(0, 0, "x");
+                Tile newTile = new Tile(0, 0, "-");
                 board[i][j] = newTile;
             }
         }
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                System.out.print(board[i][j] + " ");
+                System.out.print(board[i][j].getSymbol() + " ");
             }
             System.out.println();
         }
