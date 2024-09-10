@@ -79,14 +79,16 @@ public class TicTacToe extends JPanel implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         int mouseX = e.getX() / tileSize;
         int mouseY = e.getY() / tileSize;
-        if (currentPlayer.equals("X")) {
-            System.out.println(mouseX + " " + mouseY + " " + currentPlayer);
-            board[mouseY][mouseX].setSymbol(currentPlayer);
-            currentPlayer = "O";
-        } else if (currentPlayer.equals("O")) {
-            System.out.println(mouseX + " " + mouseY + " " + currentPlayer);
-            board[mouseY][mouseX].setSymbol(currentPlayer);
-            currentPlayer = "X";
+        if (board[mouseY][mouseX].getSymbol().equals("-")) {
+            if (currentPlayer.equals("X")) {
+                System.out.println(mouseX + " " + mouseY + " " + currentPlayer);
+                board[mouseY][mouseX].setSymbol(currentPlayer);
+                currentPlayer = "O";
+            } else if (currentPlayer.equals("O")) {
+                System.out.println(mouseX + " " + mouseY + " " + currentPlayer);
+                board[mouseY][mouseX].setSymbol(currentPlayer);
+                currentPlayer = "X";
+            }
         }
         repaint();
     }
