@@ -1,7 +1,9 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
-public class TicTacToe extends JPanel {
+public class TicTacToe extends JPanel implements MouseListener {
     private class Tile {
         int x;
         int y;
@@ -32,6 +34,7 @@ public class TicTacToe extends JPanel {
         setPreferredSize(new Dimension(this.boardWidth, this.boardHeight));
         setBackground(Color.BLACK);
         setFocusable(true);
+        addMouseListener(this);
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
@@ -61,4 +64,23 @@ public class TicTacToe extends JPanel {
             }
         }
     }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        int mouseX = e.getX();
+        int mouseY = e.getY();
+        System.out.println(mouseX + " " + mouseY);
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {}
+
+    @Override
+    public void mouseReleased(MouseEvent e) {}
+
+    @Override
+    public void mouseEntered(MouseEvent e) {}
+
+    @Override
+    public void mouseExited(MouseEvent e) {}
 }
