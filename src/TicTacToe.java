@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
@@ -18,6 +20,10 @@ public class TicTacToe extends JPanel implements MouseListener {
         public String getSymbol()
         {
             return symbol;
+        }
+
+        public void setSymbol(String symbol) {
+            this.symbol = symbol;
         }
     }
 
@@ -75,11 +81,14 @@ public class TicTacToe extends JPanel implements MouseListener {
         int mouseY = e.getY() / tileSize;
         if (currentPlayer.equals("X")) {
             System.out.println(mouseX + " " + mouseY + " " + currentPlayer);
+            board[mouseY][mouseX].setSymbol(currentPlayer);
             currentPlayer = "O";
         } else if (currentPlayer.equals("O")) {
             System.out.println(mouseX + " " + mouseY + " " + currentPlayer);
+            board[mouseY][mouseX].setSymbol(currentPlayer);
             currentPlayer = "X";
         }
+        repaint();
     }
 
     @Override
