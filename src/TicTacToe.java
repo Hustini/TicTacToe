@@ -44,7 +44,7 @@ public class TicTacToe extends JPanel implements MouseListener {
 
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                Tile newTile = new Tile(0, 0, "_");
+                Tile newTile = new Tile(j, i, "_");
                 board[i][j] = newTile;
             }
         }
@@ -64,7 +64,17 @@ public class TicTacToe extends JPanel implements MouseListener {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         draw(g);
-        checkWinner(g);
+        Tile[] winningTiles = checkWinner(g);
+        if (winningTiles != null) {
+            drawWinner(g, winningTiles);
+        }
+    }
+
+    public void drawWinner(Graphics g, Tile[] winningTiles) {
+        g.setColor(Color.GREEN);
+        for (Tile tile : winningTiles) {
+            g.fill3DRect(tile.x * tileSize, tile.y * tileSize, tileSize, tileSize, true);
+        }
     }
 
     public void draw(Graphics g) {
