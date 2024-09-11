@@ -34,6 +34,7 @@ public class TicTacToe extends JPanel implements MouseListener {
 
     String currentPlayer = "X";
     Boolean gameState = true;
+    int moveCount = 0;
 
     TicTacToe(int boardHeight, int boardWidth) {
         this.boardHeight = boardHeight;
@@ -136,14 +137,20 @@ public class TicTacToe extends JPanel implements MouseListener {
             System.out.println("Player O Wins");
             gameState = false;
             return new Tile[]{board[0][2], board[1][1], board[2][0]};
-
         }
+
+        if (moveCount == 9) {
+            System.out.println("Draw");
+            return new Tile[]{};
+        }
+
         return null;
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (gameState) {
+            moveCount++;
             int mouseX = e.getX() / tileSize;
             int mouseY = e.getY() / tileSize;
             if (board[mouseY][mouseX].getSymbol().equals("_")) {
