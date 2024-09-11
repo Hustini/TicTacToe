@@ -99,7 +99,17 @@ public class TicTacToe extends JPanel implements MouseListener {
         }
 
         // check diagonal
+        if (board[0][0].getSymbol().equals("X") && board[1][1].getSymbol().equals("X") && board[2][2].getSymbol().equals("X")) {
+            System.out.println("Player X Wins");
+        } else if (board[0][0].getSymbol().equals("O") && board[1][1].getSymbol().equals("O") && board[2][2].getSymbol().equals("O")) {
+            System.out.println("Player O Wins");
+        }
 
+        if (board[0][2].getSymbol().equals("X") && board[1][1].getSymbol().equals("X") && board[2][0].getSymbol().equals("X")) {
+            System.out.println("Player X Wins");
+        } else if (board[0][2].getSymbol().equals("O") && board[1][1].getSymbol().equals("O") && board[2][0].getSymbol().equals("O")) {
+            System.out.println("Player O Wins");
+        }
     }
 
     @Override
