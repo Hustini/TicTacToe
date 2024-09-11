@@ -33,7 +33,7 @@ public class TicTacToe extends JPanel implements MouseListener {
     Tile tile = new Tile(0, 0, "");
 
     String currentPlayer = "X";
-    Boolean gameState = true;
+    String gameState = "active";
     int moveCount = 0;
 
     TicTacToe(int boardHeight, int boardWidth) {
@@ -65,26 +65,33 @@ public class TicTacToe extends JPanel implements MouseListener {
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-        draw(g);
+        draw(g, Color.GRAY);
         Tile[] winningTiles = checkWinner(g);
         if (winningTiles != null) {
-            drawWinner(g, winningTiles);
+            drawWinner(g, winningTiles, true);
+        }
+        if (gameState.equals("draw")) {
+            drawWinner(g, winningTiles, false);
         }
     }
 
-    public void drawWinner(Graphics g, Tile[] winningTiles) {
-        for (Tile tile : winningTiles) {
-            g.setColor(Color.GREEN);
-            g.fill3DRect(tile.x * tileSize, tile.y * tileSize, tileSize, tileSize, true);
-            g.setColor(Color.BLACK);
-            g.drawString(tile.getSymbol(), tile.x * tileSize + tileSize / 2, tile.y * tileSize + tileSize / 2);
+    public void drawWinner(Graphics g, Tile[] winningTiles, boolean condition) {
+        if (condition) {
+            for (Tile tile : winningTiles) {
+                g.setColor(Color.GREEN);
+                g.fill3DRect(tile.x * tileSize, tile.y * tileSize, tileSize, tileSize, true);
+                g.setColor(Color.BLACK);
+                g.drawString(tile.getSymbol(), tile.x * tileSize + tileSize / 2, tile.y * tileSize + tileSize / 2);
+            }
+        } else {
+            draw(g, Color.RED);
         }
     }
 
-    public void draw(Graphics g) {
+    public void draw(Graphics g, Color tileColor) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                g.setColor(Color.GRAY);
+                g.setColor(tileColor);
                 g.fill3DRect(tile.x * tileSize + (j * 200), tile.y * tileSize + (i * 200), tileSize, tileSize, true);
                 g.setColor(Color.BLACK);
                 g.drawString(board[i][j].getSymbol(), j * tileSize + tileSize / 2, i * tileSize + tileSize / 2);
@@ -97,22 +104,22 @@ public class TicTacToe extends JPanel implements MouseListener {
             // Check cols
             if (board[i][0].getSymbol().equals("X") && board[i][1].getSymbol().equals("X") && board[i][2].getSymbol().equals("X")) {
                 System.out.println("Player X Wins");
-                gameState = false;
+                gameState = "won";
                 return new Tile[]{board[i][0], board[i][1], board[i][2]};
             } else if (board[i][0].getSymbol().equals("O") && board[i][1].getSymbol().equals("O") && board[i][2].getSymbol().equals("O")) {
                 System.out.println("Player O Wins");
-                gameState = false;
+                gameState = "won";
                 return new Tile[]{board[i][0], board[i][1], board[i][2]};
             }
 
             // check rows
             if (board[0][i].getSymbol().equals("X") && board[1][i].getSymbol().equals("X") && board[2][i].getSymbol().equals("X")) {
                 System.out.println("Player X Wins");
-                gameState = false;
+                gameState = "won";
                 return new Tile[]{board[0][i], board[1][i], board[2][i]};
             } else if (board[0][i].getSymbol().equals("O") && board[1][i].getSymbol().equals("O") && board[2][i].getSymbol().equals("O")) {
                 System.out.println("Player O Wins");
-                gameState = false;
+                gameState = "won";
                 return new Tile[]{board[0][i], board[1][i], board[2][i]};
             }
         }
@@ -120,28 +127,29 @@ public class TicTacToe extends JPanel implements MouseListener {
         // check diagonal
         if (board[0][0].getSymbol().equals("X") && board[1][1].getSymbol().equals("X") && board[2][2].getSymbol().equals("X")) {
             System.out.println("Player X Wins");
-            gameState = false;
+            gameState = "won";
             return new Tile[]{board[0][0], board[1][1], board[2][2]};
         } else if (board[0][0].getSymbol().equals("O") && board[1][1].getSymbol().equals("O") && board[2][2].getSymbol().equals("O")) {
             System.out.println("Player O Wins");
-            gameState = false;
+            gameState = "won";
             return new Tile[]{board[0][0], board[1][1], board[2][2]};
         }
 
         if (board[0][2].getSymbol().equals("X") && board[1][1].getSymbol().equals("X") && board[2][0].getSymbol().equals("X")) {
             System.out.println("Player X Wins");
-            gameState = false;
+            gameState = "won";
             return new Tile[]{board[0][2], board[1][1], board[2][0]};
 
         } else if (board[0][2].getSymbol().equals("O") && board[1][1].getSymbol().equals("O") && board[2][0].getSymbol().equals("O")) {
             System.out.println("Player O Wins");
-            gameState = false;
+            gameState = "won";
             return new Tile[]{board[0][2], board[1][1], board[2][0]};
         }
 
         if (moveCount == 9) {
             System.out.println("Draw");
-            return new Tile[]{};
+            gameState = "draw";
+            return null;
         }
 
         return null;
@@ -149,7 +157,7 @@ public class TicTacToe extends JPanel implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        if (gameState) {
+        if (gameState.equals("active")) {
             moveCount++;
             int mouseX = e.getX() / tileSize;
             int mouseY = e.getY() / tileSize;
