@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Arrays;
 
 public class TicTacToe extends JPanel implements MouseListener {
     private class Tile {
@@ -77,6 +78,16 @@ public class TicTacToe extends JPanel implements MouseListener {
         }
     }
 
+    public void checkWinner() {
+        for (int i = 0; i < 3; i++) {
+            if (board[i][0].getSymbol().equals("X") && board[i][1].getSymbol().equals("X") && board[i][2].getSymbol().equals("X")) {
+                System.out.println("Player 1 Wins");
+            } else if (board[i][0].getSymbol().equals("O") && board[i][1].getSymbol().equals("O") && board[i][2].getSymbol().equals("O")) {
+                System.out.println("Player 2 Wins");
+            }
+        }
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
         int mouseX = e.getX() / tileSize;
@@ -91,9 +102,10 @@ public class TicTacToe extends JPanel implements MouseListener {
                 board[mouseY][mouseX].setSymbol(currentPlayer);
                 currentPlayer = "X";
             }
+            printBoard();
+            checkWinner();
         }
         repaint();
-        printBoard();
     }
 
     @Override
