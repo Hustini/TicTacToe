@@ -33,6 +33,7 @@ public class TicTacToe extends JPanel implements MouseListener {
     Tile tile = new Tile(0, 0, "");
 
     String currentPlayer = "X";
+    Boolean gameState = true;
 
     TicTacToe(int boardHeight, int boardWidth) {
         this.boardHeight = boardHeight;
@@ -95,18 +96,22 @@ public class TicTacToe extends JPanel implements MouseListener {
             // Check cols
             if (board[i][0].getSymbol().equals("X") && board[i][1].getSymbol().equals("X") && board[i][2].getSymbol().equals("X")) {
                 System.out.println("Player X Wins");
+                gameState = false;
                 return new Tile[]{board[i][0], board[i][1], board[i][2]};
             } else if (board[i][0].getSymbol().equals("O") && board[i][1].getSymbol().equals("O") && board[i][2].getSymbol().equals("O")) {
                 System.out.println("Player O Wins");
+                gameState = false;
                 return new Tile[]{board[i][0], board[i][1], board[i][2]};
             }
 
             // check rows
             if (board[0][i].getSymbol().equals("X") && board[1][i].getSymbol().equals("X") && board[2][i].getSymbol().equals("X")) {
                 System.out.println("Player X Wins");
+                gameState = false;
                 return new Tile[]{board[0][i], board[1][i], board[2][i]};
             } else if (board[0][i].getSymbol().equals("O") && board[1][i].getSymbol().equals("O") && board[2][i].getSymbol().equals("O")) {
                 System.out.println("Player O Wins");
+                gameState = false;
                 return new Tile[]{board[0][i], board[1][i], board[2][i]};
             }
         }
@@ -114,18 +119,22 @@ public class TicTacToe extends JPanel implements MouseListener {
         // check diagonal
         if (board[0][0].getSymbol().equals("X") && board[1][1].getSymbol().equals("X") && board[2][2].getSymbol().equals("X")) {
             System.out.println("Player X Wins");
+            gameState = false;
             return new Tile[]{board[0][0], board[1][1], board[2][2]};
         } else if (board[0][0].getSymbol().equals("O") && board[1][1].getSymbol().equals("O") && board[2][2].getSymbol().equals("O")) {
             System.out.println("Player O Wins");
+            gameState = false;
             return new Tile[]{board[0][0], board[1][1], board[2][2]};
         }
 
         if (board[0][2].getSymbol().equals("X") && board[1][1].getSymbol().equals("X") && board[2][0].getSymbol().equals("X")) {
             System.out.println("Player X Wins");
+            gameState = false;
             return new Tile[]{board[0][2], board[1][1], board[2][0]};
 
         } else if (board[0][2].getSymbol().equals("O") && board[1][1].getSymbol().equals("O") && board[2][0].getSymbol().equals("O")) {
             System.out.println("Player O Wins");
+            gameState = false;
             return new Tile[]{board[0][2], board[1][1], board[2][0]};
 
         }
@@ -134,21 +143,23 @@ public class TicTacToe extends JPanel implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        int mouseX = e.getX() / tileSize;
-        int mouseY = e.getY() / tileSize;
-        if (board[mouseY][mouseX].getSymbol().equals("_")) {
-            if (currentPlayer.equals("X")) {
-                System.out.println(mouseX + " " + mouseY + " " + currentPlayer);
-                board[mouseY][mouseX].setSymbol(currentPlayer);
-                currentPlayer = "O";
-            } else if (currentPlayer.equals("O")) {
-                System.out.println(mouseX + " " + mouseY + " " + currentPlayer);
-                board[mouseY][mouseX].setSymbol(currentPlayer);
-                currentPlayer = "X";
+        if (gameState) {
+            int mouseX = e.getX() / tileSize;
+            int mouseY = e.getY() / tileSize;
+            if (board[mouseY][mouseX].getSymbol().equals("_")) {
+                if (currentPlayer.equals("X")) {
+                    System.out.println(mouseX + " " + mouseY + " " + currentPlayer);
+                    board[mouseY][mouseX].setSymbol(currentPlayer);
+                    currentPlayer = "O";
+                } else if (currentPlayer.equals("O")) {
+                    System.out.println(mouseX + " " + mouseY + " " + currentPlayer);
+                    board[mouseY][mouseX].setSymbol(currentPlayer);
+                    currentPlayer = "X";
+                }
+                printBoard();
             }
-            printBoard();
+            repaint();
         }
-        repaint();
     }
 
     @Override
