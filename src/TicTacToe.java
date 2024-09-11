@@ -71,9 +71,11 @@ public class TicTacToe extends JPanel implements MouseListener {
     }
 
     public void drawWinner(Graphics g, Tile[] winningTiles) {
-        g.setColor(Color.GREEN);
         for (Tile tile : winningTiles) {
+            g.setColor(Color.GREEN);
             g.fill3DRect(tile.x * tileSize, tile.y * tileSize, tileSize, tileSize, true);
+            g.setColor(Color.BLACK);
+            g.drawString(tile.getSymbol(), tile.x * tileSize + tileSize / 2, tile.y * tileSize + tileSize / 2);
         }
     }
 
