@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TicTacToe extends JPanel implements MouseListener {
     private class Tile {
@@ -67,6 +69,7 @@ public class TicTacToe extends JPanel implements MouseListener {
         super.paintComponent(g);
         draw(g, Color.GRAY);
         Tile[] winningTiles = checkWinner(g);
+        miniMax(gameState);
         if (winningTiles != null) {
             drawWinner(g, winningTiles, true);
         }
@@ -104,22 +107,22 @@ public class TicTacToe extends JPanel implements MouseListener {
             // Check cols
             if (board[i][0].getSymbol().equals("X") && board[i][1].getSymbol().equals("X") && board[i][2].getSymbol().equals("X")) {
                 System.out.println("Player X Wins");
-                gameState = "won";
+                gameState = "won X";
                 return new Tile[]{board[i][0], board[i][1], board[i][2]};
             } else if (board[i][0].getSymbol().equals("O") && board[i][1].getSymbol().equals("O") && board[i][2].getSymbol().equals("O")) {
                 System.out.println("Player O Wins");
-                gameState = "won";
+                gameState = "won O";
                 return new Tile[]{board[i][0], board[i][1], board[i][2]};
             }
 
             // check rows
             if (board[0][i].getSymbol().equals("X") && board[1][i].getSymbol().equals("X") && board[2][i].getSymbol().equals("X")) {
                 System.out.println("Player X Wins");
-                gameState = "won";
+                gameState = "won X";
                 return new Tile[]{board[0][i], board[1][i], board[2][i]};
             } else if (board[0][i].getSymbol().equals("O") && board[1][i].getSymbol().equals("O") && board[2][i].getSymbol().equals("O")) {
                 System.out.println("Player O Wins");
-                gameState = "won";
+                gameState = "won O";
                 return new Tile[]{board[0][i], board[1][i], board[2][i]};
             }
         }
@@ -127,22 +130,22 @@ public class TicTacToe extends JPanel implements MouseListener {
         // check diagonal
         if (board[0][0].getSymbol().equals("X") && board[1][1].getSymbol().equals("X") && board[2][2].getSymbol().equals("X")) {
             System.out.println("Player X Wins");
-            gameState = "won";
+            gameState = "won X";
             return new Tile[]{board[0][0], board[1][1], board[2][2]};
         } else if (board[0][0].getSymbol().equals("O") && board[1][1].getSymbol().equals("O") && board[2][2].getSymbol().equals("O")) {
             System.out.println("Player O Wins");
-            gameState = "won";
+            gameState = "won O";
             return new Tile[]{board[0][0], board[1][1], board[2][2]};
         }
 
         if (board[0][2].getSymbol().equals("X") && board[1][1].getSymbol().equals("X") && board[2][0].getSymbol().equals("X")) {
             System.out.println("Player X Wins");
-            gameState = "won";
+            gameState = "won X";
             return new Tile[]{board[0][2], board[1][1], board[2][0]};
 
         } else if (board[0][2].getSymbol().equals("O") && board[1][1].getSymbol().equals("O") && board[2][0].getSymbol().equals("O")) {
             System.out.println("Player O Wins");
-            gameState = "won";
+            gameState = "won O";
             return new Tile[]{board[0][2], board[1][1], board[2][0]};
         }
 
@@ -188,4 +191,25 @@ public class TicTacToe extends JPanel implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {}
+
+    public int score(String gameState) {
+        if (gameState.equals("won X")) {
+            return 10;
+        } else if (gameState.equals("won O")) {
+            return -10;
+        } else if (gameState.equals("draw")) {
+            return 0;
+        }
+        return 0;
+    }
+
+    public int miniMax(String gameState) {
+        if (!gameState.equals("active")) {
+            return score(gameState);
+        }
+
+        List<Integer> scores = new ArrayList<>();
+        List<Integer> moves = new ArrayList<>();
+        return 0;
+    }
 }
